@@ -1,0 +1,11 @@
+{
+  "targets": {
+    "adecco-46d2a": {
+      "hosting": {
+        "crud": [
+          "adecco-46d2a"
+        ]
+      }
+    }
+  }
+}

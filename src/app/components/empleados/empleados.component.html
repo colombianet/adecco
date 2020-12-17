@@ -1,0 +1,41 @@
+<div class="container mt-4">
+    <div class="card">
+        <div class="card-body">
+            <div class="col">
+                <p class="h3">Listado de Empleados</p>
+                <hr>
+                <button class="btn btn-outline-dark" routerLink="/crear">
+                    <i class="fas fa-plus"></i> Agregar
+                </button>
+            </div>
+            <div class="spinner-border mt-3" role="status" *ngIf="loading">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+            <div class="alert alert-warning" role="alert" *ngIf="empleados && empleados.length == 0 && !loading">
+                No hay datos para mostrar!
+            </div>
+            <table class="table table-responsive table-striped mt-4" *ngIf="empleados && empleados.length > 0 && !loading">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Apellidos</th>
+                        <th>Cumpleaños</th>
+                        <th>Salario</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let empleado of empleados">
+                        <td>{{ empleado.nombre }}</td>
+                        <td>{{ empleado.apellido }}</td>
+                        <td>{{ empleado.fechaNacimiento }}</td>
+                        <td>{{ empleado.salario | currency }}</td>
+                        <td>
+                            <i class="fas fa-edit fa-lg text-info m-1" [routerLink]="['/editar', empleado.id]"></i>
+                            <i class="fas fa-trash fa-lg text-danger" (click)="eliminarEmpleado(empleado)"></i>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
