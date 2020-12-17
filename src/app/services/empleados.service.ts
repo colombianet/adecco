@@ -1,6 +1,9 @@
 import { Injectable } from '@angular/core';
-import { AngularFirestore } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
+
+import { Empleado } from '../models/empledo.interface';
+
+import { AngularFirestore } from '@angular/fire/firestore';
 
 @Injectable({
   providedIn: 'root'
@@ -9,7 +12,7 @@ export class EmpleadosService {
 
   constructor( private firestore: AngularFirestore ) { }
 
-  agregarEmpleado(empleado: any): Promise<any> {
+  agregarEmpleado(empleado: Empleado): Promise<any> {
     return this.firestore.collection('empleados', ref => ref.orderBy('actualizado', 'asc')).add(empleado);
   }
 
@@ -25,7 +28,7 @@ export class EmpleadosService {
     return this.firestore.collection('empleados').doc(id).snapshotChanges();
   }
 
-  updateEmpleado(id: string, empleado: any): Promise<any> {
+  updateEmpleado(id: string, empleado: Empleado): Promise<any> {
     return this.firestore.collection('empleados').doc(id).update( empleado );
   }
 }

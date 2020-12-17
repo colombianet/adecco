@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+
 import { EmpleadosService } from '../../services/empleados.service';
+import { Empleado } from 'src/app/models/empledo.interface';
+
 import swal from 'sweetalert2';
 
 @Component({
@@ -49,13 +52,7 @@ export class CrearComponent implements OnInit {
 
   agregarEmpleado() {
     this.loading = true;
-    const empleado = {
-      nombre: this.createEmpleado.value.nombre,
-      apellido: this.createEmpleado.value.apellido,
-      salario: this.createEmpleado.value.salario,
-      fechaNacimiento: this.createEmpleado.value.fechaNacimiento,
-      actualizado: new Date()
-    };
+    const empleado: Empleado = this.empleado;
 
     this.empleadosService.agregarEmpleado(empleado)
       .then(() => {
@@ -69,16 +66,20 @@ export class CrearComponent implements OnInit {
 
   }
 
-
-  editarEmpleado( id: string ) {
-    this.loading = true;
-    const empleado = {
+  get empleado() {
+    const empleado: Empleado = {
       nombre: this.createEmpleado.value.nombre,
       apellido: this.createEmpleado.value.apellido,
       salario: this.createEmpleado.value.salario,
       fechaNacimiento: this.createEmpleado.value.fechaNacimiento,
       actualizado: new Date()
     };
+    return empleado;
+  }
+
+  editarEmpleado( id: string ) {
+    this.loading = true;
+    const empleado: Empleado = this.empleado;
 
     this.empleadosService.updateEmpleado(id, empleado).then(() => {
       swal.fire('Actualizado', 'Se ha actualizado el empleado con éxito', 'success');
@@ -88,7 +89,7 @@ export class CrearComponent implements OnInit {
   }
 
   esEditar() {
-    if ( this.id != null ) {
+    if ( this.id !== null ) {
       this.empleadosService.getEmpleado(this.id).subscribe( resp => {
         this.createEmpleado.setValue({
           nombre: resp.payload.data()['nombre'],

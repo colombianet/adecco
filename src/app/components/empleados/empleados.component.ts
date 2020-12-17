@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
+
 import { EmpleadosService } from 'src/app/services/empleados.service';
+
 import swal from 'sweetalert2';
 
 @Component({
@@ -17,6 +18,10 @@ export class EmpleadosComponent implements OnInit {
   constructor( private empleadosService: EmpleadosService ) {}
 
   ngOnInit(): void {
+    this.getEmpleados();
+  }
+
+  getEmpleados() {
     this.loading = true;
     this.empleadosService.getEmpleados().subscribe( resp => {
       this.empleados = [];
